@@ -3,8 +3,12 @@ import { Grid, GridItem } from "@chakra-ui/react/grid";
 import Navbar from "./components/ui/Navbar";
 import GameGrid from "./components/ui/GameGrid";
 import GenreList from "./components/ui/GenreList";
+import { useState } from "react";
+import { Genre } from "./hooks/useGenresList";
 
 function App() {
+  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+
   const showAside = useBreakpointValue({ base: false, lg: true });
   return (
     <Grid
@@ -22,11 +26,11 @@ function App() {
       </GridItem>
       {showAside && (
         <GridItem area="aside" paddingX={5}>
-          <GenreList />
+          <GenreList onSelectGenre={(genre) => setSelectedGenre(genre)} />
         </GridItem>
       )}
       <GridItem area="main">
-        <GameGrid />
+        <GameGrid selectedGenre={selectedGenre} />
       </GridItem>
     </Grid>
   );
